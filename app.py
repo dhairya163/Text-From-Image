@@ -19,7 +19,7 @@ with open(os.path.join(WORKING_DIR, 'tokenizer'), 'rb') as f:
 
 from tensorflow import keras
 
-model = keras.models.load_model(WORKING_DIR + '/best_model.h5')
+model = keras.models.load_model(WORKING_DIR + '/best_model.h5',compile=False)
 
 
 def idx_to_word(integer, tokenizer):

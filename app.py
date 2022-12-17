@@ -105,7 +105,7 @@ def extract_features(img_path):
     return features
 
 
-st.header("Upload an Image to generate Caption or Select a Default Image")
+st.header("Upload an Image to Generate Caption/Summary or Select a Default Image")
 pressed1 = st.checkbox(label='Choose a random Image')
 st.write("or")
 uploaded_file = st.file_uploader("Choose a file")

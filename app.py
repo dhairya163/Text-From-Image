@@ -4,6 +4,7 @@ from nltk.translate.bleu_score import corpus_bleu
 from tqdm.notebook import tqdm
 import os
 import pickle
+from tensorflow import keras
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 import numpy as np
@@ -17,9 +18,7 @@ with open(os.path.join(WORKING_DIR, 'mapping'), 'rb') as f:
 with open(os.path.join(WORKING_DIR, 'tokenizer'), 'rb') as f:
     tokenizer = pickle.load(f)
 
-from tensorflow import keras
-
-model = keras.models.load_model(WORKING_DIR + '/best_model.h5')
+model = keras.models.load_model('best_model.h5')
 
 
 def idx_to_word(integer, tokenizer):

@@ -18,7 +18,7 @@ with open(os.path.join(WORKING_DIR, 'mapping'), 'rb') as f:
 with open(os.path.join(WORKING_DIR, 'tokenizer'), 'rb') as f:
     tokenizer = pickle.load(f)
 
-model = keras.models.load_model('best_model.h5',compile=False)
+model = keras.models.load_model(WORKING_DIR + '/best_model.h5',compile=False)
 
 
 def idx_to_word(integer, tokenizer):

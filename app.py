@@ -4,7 +4,6 @@ from nltk.translate.bleu_score import corpus_bleu
 from tqdm.notebook import tqdm
 import os
 import pickle
-from tensorflow import keras
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 import numpy as np
@@ -18,7 +17,9 @@ with open(os.path.join(WORKING_DIR, 'mapping'), 'rb') as f:
 with open(os.path.join(WORKING_DIR, 'tokenizer'), 'rb') as f:
     tokenizer = pickle.load(f)
 
-model = keras.models.load_model(WORKING_DIR + '/best_model.h5',compile=False)
+from tensorflow import keras
+
+model = keras.models.load_model(WORKING_DIR + '/best_model.h5')
 
 
 def idx_to_word(integer, tokenizer):
@@ -104,15 +105,32 @@ def extract_features(img_path):
     return features
 
 
+st.header("Upload an Image to generate Caption or Select a Default Image")
+pressed1 = st.checkbox(label='Choose a random Image')
+st.write("or")
 uploaded_file = st.file_uploader("Choose a file")
-pressed1 = st.button(label='Extract Features and Generate Caption')
+st.markdown("""---""")
+pressed2 = st.button(label='Extract Features and Generate Caption')
 
-if pressed1:
-    st.header("Uploaded Image -")
+if pressed2 and pressed1:
+    uploaded_file = 'testpic.jpg'
+    st.subheader("Uploaded Image -")
     st.image(uploaded_file)
     print(uploaded_file)
     features = extract_features(uploaded_file)
-    st.header("Features Extracted -")
+    st.markdown("""---""")
+    st.subheader("Features Extracted -")
     st.write(features)
-    st.header("Caption Generated-")
+    st.markdown("""---""")
+    st.subheader("Caption Generated-")
+    generate_caption(uploaded_file, features, 35)
+
+if pressed2 and not pressed1:
+    st.subheader("Uploaded Image -")
+    st.image(uploaded_file)
+    print(uploaded_file)
+    features = extract_features(uploaded_file)
+    st.subheader("Features Extracted -")
+    st.write(features)
+    st.subheader("Caption Generated-")
     generate_caption(uploaded_file, features, 35)
